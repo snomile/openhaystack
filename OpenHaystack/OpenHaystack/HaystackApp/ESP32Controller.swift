@@ -38,7 +38,7 @@ struct ESP32Controller {
         try FileManager.default.copyFolder(from: espDirectory, to: urlTemp)
         let scriptPath = urlTemp.appendingPathComponent("flash_esp32.sh")
 
-        let key = accessory.privateKey.base64EncodedString()
+        let key = try accessory.getAdvertisementKey().base64EncodedString()
         let arguments = ["-p", "\(port.path)", key]
 
         let task = try NSUserUnixTask(url: scriptPath)
