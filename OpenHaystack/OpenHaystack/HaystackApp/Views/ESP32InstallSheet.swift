@@ -90,7 +90,7 @@ struct ESP32InstallSheet: View {
                     ActivityIndicator(size: .large)
                     Text("This can take up to 3min")
                 }
-                
+
             }
         }
     }
@@ -107,12 +107,16 @@ struct ESP32InstallSheet: View {
                     self.alertType = .deployedSuccessfully
                 case .failure(let error):
                     os_log(.error, "Flashing to ESP32 failed %@", String(describing: error))
+                    self.presentationMode.wrappedValue.dismiss()
                     self.alertType = .deployFailed
                 }
             })
         } catch {
             os_log(.error, "Execution of script failed %@", String(describing: error))
+            self.presentationMode.wrappedValue.dismiss()
             self.alertType = .deployFailed
+            self.isFlashing = false
+
         }
 
         self.accessory = nil
