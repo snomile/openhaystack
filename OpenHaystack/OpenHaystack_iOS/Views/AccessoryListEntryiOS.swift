@@ -10,6 +10,7 @@
 import Foundation
 import SwiftUI
 import os
+import UniformTypeIdentifiers
 
 struct AccessoryListEntryiOS: View {
     var accessory: Accessory
@@ -84,8 +85,7 @@ struct AccessoryListEntryiOS: View {
         do {
             let publicKey = try accessory.getAdvertisementKey()
             let pasteboard = UIPasteboard.general
-            pasteboard.setValue(publicKey.base64EncodedString(), forPasteboardType: "text")
-            pasteboard.string = publicKey.base64EncodedString()
+            pasteboard.setValue(publicKey.base64EncodedString(), forPasteboardType: UTType.plainText.identifier)
         } catch {
             os_log("Failed extracing public key %@", String(describing: error))
             assert(false)
@@ -96,7 +96,7 @@ struct AccessoryListEntryiOS: View {
         do {
             let keyID = try accessory.getKeyId()
             let pasteboard = UIPasteboard.general
-            pasteboard.setValue(keyID, forPasteboardType: "text")
+            pasteboard.setValue(keyID, forPasteboardType: UTType.plainText.identifier)
         } catch {
             os_log("Failed extracing public key %@", String(describing: error))
             assert(false)
@@ -111,11 +111,12 @@ struct AccessoryListEntryiOS: View {
             if escapedString {
                 let string = keyByteArray.map { "\\x\(String($0, radix: 16))" }.joined()
                 let pasteboard = UIPasteboard.general
-                pasteboard.setValue(string, forPasteboardType: "text")
+                pasteboard.setValue(string, forPasteboardType: UTType.plainText.identifier)
+                
             } else {
                 let string = keyByteArray.map { "0x\(String($0, radix: 16))" }.joined(separator: ", ")
                 let pasteboard = UIPasteboard.general
-                pasteboard.setValue(string, forPasteboardType: "text")
+                pasteboard.setValue(string, forPasteboardType: UTType.plainText.identifier)
             }
         } catch {
             os_log("Failed extracing public key %@", String(describing: error))
