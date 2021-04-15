@@ -9,7 +9,6 @@
 
 import Foundation
 
-
 extension FindMyController {
     func fetchReports(with searchPartyToken: Data, completion: @escaping (Error?) -> Void) {
 

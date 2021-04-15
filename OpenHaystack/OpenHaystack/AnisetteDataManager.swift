@@ -17,18 +17,20 @@ public class AnisetteDataManager: NSObject {
     private var anisetteDataTimers: [String: Timer] = [:]
 
     let notificationQueue = OperationQueue()
-    
+
     private override init() {
         super.init()
 
         dlopen("/System/Library/PrivateFrameworks/AuthKit.framework/AuthKit", RTLD_NOW)
-        
+
         DistributedNotificationCenter.default()
-            .addObserver(forName: Notification.Name("de.tu-darmstadt.seemoo.OpenHaystack.AnisetteDataResponse"),
-                         object: nil, queue: notificationQueue) { notification in
+            .addObserver(
+                forName: Notification.Name("de.tu-darmstadt.seemoo.OpenHaystack.AnisetteDataResponse"),
+                object: nil, queue: notificationQueue
+            ) { notification in
                 self.handleAppleDataResponse(notification)
             }
-        
+
     }
 
     func requestAnisetteData(_ completion: @escaping (Result<AppleAccountData, Error>) -> Void) {

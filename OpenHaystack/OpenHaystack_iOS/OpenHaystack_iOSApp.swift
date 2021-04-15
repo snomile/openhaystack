@@ -13,7 +13,7 @@ import SwiftUI
 struct OpenHaystack_iOSApp: App {
     @StateObject var accessoryController: AccessoryController
     var accessoryNearbyMonitor: AccessoryNearbyMonitor?
-    
+
     init() {
         let accessoryController: AccessoryController
         if ProcessInfo().arguments.contains("-preview") {
@@ -25,7 +25,7 @@ struct OpenHaystack_iOSApp: App {
         }
         self._accessoryController = StateObject(wrappedValue: accessoryController)
     }
-    
+
     var body: some Scene {
         WindowGroup {
             MainView()

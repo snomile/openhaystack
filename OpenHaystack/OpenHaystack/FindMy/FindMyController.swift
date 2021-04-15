@@ -15,7 +15,7 @@ import SwiftUI
 class FindMyController: ObservableObject {
     @Published var error: Error?
     @Published var devices = [FindMyDevice]()
-    
+
     /// If we use an intermediate server for fetching reports its URL has to be stored here
     var serverURL: URL?
 

@@ -15,14 +15,14 @@ struct ServerReportsFetcher {
 
         let promise = req.eventLoop.makePromise(of: Response.self)
         var finished = false
-        
+
         let reportsFetcher = ReportsFetcher()
-        
+
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 20) {
-            guard !finished else {return}
+            guard !finished else { return }
             promise.succeed(Response(status: .notFound, body: Response.Body(staticString: "Search party token not available")))
         }
-        
+
         //Get the anisette data and token
         AnisetteDataManager.shared.requestAnisetteData { result in
             switch result {
@@ -30,16 +30,17 @@ struct ServerReportsFetcher {
                 print(error)
                 finished = true
                 promise.succeed(Response(status: .notFound, body: Response.Body(staticString: "Anisette data not available")))
-                
+
             case .success(let accountData):
                 //Fetch the reports
                 guard let token = accountData.searchPartyToken,
-                      token.isEmpty == false else {
+                    token.isEmpty == false
+                else {
                     finished = true
                     promise.succeed(Response(status: .notFound, body: Response.Body(staticString: "Search party token not available")))
                     return
                 }
-                
+
                 // 7 days
                 let duration: Double = (24 * 60 * 60) * 7
                 let startDate = Date() - duration
@@ -52,10 +53,10 @@ struct ServerReportsFetcher {
                     finished = true
                     promise.succeed(Response(status: .ok, body: Response.Body(data: responseData ?? Data())))
                 }
-                
+
             }
         }
-        
+
         return promise.futureResult
     }
 }

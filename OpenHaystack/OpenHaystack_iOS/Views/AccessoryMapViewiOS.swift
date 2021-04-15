@@ -8,8 +8,8 @@
 //
 
 import Foundation
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct AccessoryMapViewiOS: UIViewControllerRepresentable {
     @ObservedObject var accessoryController: AccessoryController
@@ -18,11 +18,11 @@ struct AccessoryMapViewiOS: UIViewControllerRepresentable {
     @Binding var showHistory: Bool
     @Binding var showPastHistory: TimeInterval
     var delayer = UpdateDelayer()
-    
+
     func makeUIViewController(context: Context) -> AccessoryMapViewController {
         return AccessoryMapViewController()
     }
-    
+
     func updateUIViewController(_ uiViewController: AccessoryMapViewController, context: Context) {
         let accessories = self.accessoryController.accessories
 
@@ -44,20 +44,20 @@ final class AccessoryMapViewController: UIViewController, MKMapViewDelegate {
     var mapView: MKMapView = MKMapView()
     var pinsShown = false
     var focusedAccessory: Accessory?
-    
+
     override func viewDidLoad() {
         self.view.addSubview(mapView)
-        
+
         self.mapView.delegate = self
         self.mapView.register(AccessoryAnnotationView.self, forAnnotationViewWithReuseIdentifier: "Accessory")
         self.mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AccessoryHistory")
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.mapView.frame = self.view.bounds
     }
-    
+
     func addLastLocations(from accessories: [Accessory]) {
         // Add pins
         self.mapView.removeAnnotations(self.mapView.annotations)
@@ -67,7 +67,7 @@ final class AccessoryMapViewController: UIViewController, MKMapViewDelegate {
             self.mapView.addAnnotation(annotation)
         }
     }
-    
+
     func zoomInOnSelection() {
         if focusedAccessory == nil {
             zoomInOnAll()
@@ -82,22 +82,22 @@ final class AccessoryMapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
+
     func zoomInOnAll() {
         zoomInOn(annotations: self.mapView.annotations)
     }
-    
+
     func zoomInOn(annotations: [MKAnnotation]) {
         DispatchQueue.main.async {
             self.mapView.showAnnotations(annotations, animated: true)
         }
     }
-    
+
     func changeMapType(_ mapType: MKMapType) {
-        guard self.mapView.mapType != mapType else {return}
+        guard self.mapView.mapType != mapType else { return }
         self.mapView.mapType = mapType
     }
-    
+
     func addAllLocations(from accessory: Accessory, past: TimeInterval) {
         let now = Date()
         let pastLocations = accessory.locations?.filter { location in
@@ -114,8 +114,7 @@ final class AccessoryMapViewController: UIViewController, MKMapViewDelegate {
             self.mapView.addAnnotation(annotation)
         }
     }
-    
-    
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case is AccessoryAnnotation:

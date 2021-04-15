@@ -12,20 +12,20 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPickerView: UIViewControllerRepresentable {
-    
+
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedFile: Data?
-    
+
     func makeCoordinator() -> DocumentPickerDelegate {
         return DocumentPickerDelegate(presentationMode: self.presentationMode, selectedFile: $selectedFile)
     }
-    
+
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.propertyList], asCopy: true)
         picker.delegate = context.coordinator
         return picker
     }
-    
+
     func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {
         uiViewController.delegate = context.coordinator
         context.coordinator.presentationMode = self.presentationMode
@@ -35,24 +35,24 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 class DocumentPickerDelegate: NSObject, ObservableObject, UIDocumentPickerDelegate {
     var presentationMode: Binding<PresentationMode>
     var selectedFile: Binding<Data?>
-    
+
     internal init(presentationMode: Binding<PresentationMode>, selectedFile: Binding<Data?>) {
         self.presentationMode = presentationMode
         self.selectedFile = selectedFile
     }
-    
+
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         //Close
         self.presentationMode.wrappedValue.dismiss()
     }
-    
+
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         self.presentationMode.wrappedValue.dismiss()
         if let url = urls.first {
             _ = url.startAccessingSecurityScopedResource()
             let file = try? Data(contentsOf: url)
             url.stopAccessingSecurityScopedResource()
-            
+
             if let plistFile = file {
                 self.selectedFile.wrappedValue = plistFile
             }

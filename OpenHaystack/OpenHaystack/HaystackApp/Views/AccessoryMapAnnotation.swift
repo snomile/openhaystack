@@ -12,11 +12,11 @@ import MapKit
 import SwiftUI
 
 class AccessoryAnnotationView: MKAnnotationView {
-    
+
     #if os(macOS)
-    var pinView: NSHostingView<AccessoryPinView>?
+        var pinView: NSHostingView<AccessoryPinView>?
     #elseif os(iOS)
-    var pinView: UIHostingController<AccessoryPinView>?
+        var pinView: UIHostingController<AccessoryPinView>?
     #endif
 
     var myAnnotation: MKAnnotation? {
@@ -49,26 +49,25 @@ class AccessoryAnnotationView: MKAnnotationView {
     func updateView() {
         guard let accessory = (self.annotation as? AccessoryAnnotation)?.accessory else { return }
         #if os(macOS)
-        self.pinView?.removeFromSuperview()
-        self.pinView = NSHostingView(rootView: AccessoryPinView(accessory: accessory))
+            self.pinView?.removeFromSuperview()
+            self.pinView = NSHostingView(rootView: AccessoryPinView(accessory: accessory))
 
-        self.addSubview(pinView!)
+            self.addSubview(pinView!)
 
-        self.leftCalloutOffset = CGPoint(x: -13, y: -15)
-        self.rightCalloutOffset = CGPoint(x: -13, y: -15)
-        let calloutView = NSTextView()
-        calloutView.string = accessory.name
-        calloutView.backgroundColor = NSColor.clear
+            self.leftCalloutOffset = CGPoint(x: -13, y: -15)
+            self.rightCalloutOffset = CGPoint(x: -13, y: -15)
+            let calloutView = NSTextView()
+            calloutView.string = accessory.name
+            calloutView.backgroundColor = NSColor.clear
         #elseif os(iOS)
-        self.pinView?.view.removeFromSuperview()
-        self.pinView = UIHostingController(rootView: AccessoryPinView(accessory: accessory))
+            self.pinView?.view.removeFromSuperview()
+            self.pinView = UIHostingController(rootView: AccessoryPinView(accessory: accessory))
 
-        self.addSubview(pinView!.view!)
+            self.addSubview(pinView!.view!)
 
-
-        let calloutView = UILabel()
-        calloutView.text = accessory.name
-        calloutView.backgroundColor = UIColor.clear
+            let calloutView = UILabel()
+            calloutView.text = accessory.name
+            calloutView.backgroundColor = UIColor.clear
         #endif
 
         calloutView.frame = CGRect(x: 0, y: 0, width: 150, height: 30)
@@ -78,11 +77,11 @@ class AccessoryAnnotationView: MKAnnotationView {
             dateFormatter.timeStyle = .short
 
             let dateString = dateFormatter.string(from: date)
-            
+
             #if os(macOS)
-            calloutView.string = "\(accessory.name)\n\(dateString)"
+                calloutView.string = "\(accessory.name)\n\(dateString)"
             #elseif os(iOS)
-            calloutView.text = "\(accessory.name)\n\(dateString)"
+                calloutView.text = "\(accessory.name)\n\(dateString)"
             #endif
             calloutView.frame = CGRect(x: 0, y: 0, width: 150, height: 40)
         }

@@ -7,14 +7,14 @@
 //  SPDX-License-Identifier: AGPL-3.0-only
 //
 
+import AppKit
 import Foundation
 import Vapor
-import AppKit
 
 let macApp = NSApplication.shared
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         do {
             let app = try Application(.detect())
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
             try app.run()
-        }catch {
+        } catch {
             fatalError("Vapor failed to start \(String(describing: error))")
         }
     }
