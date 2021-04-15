@@ -10,8 +10,8 @@
 import CoreLocation
 import Foundation
 
-struct FindMyDevice: Codable, Hashable {
-
+class FindMyDevice: Codable, Hashable {
+    
     let deviceId: String
     var keys = [FindMyKey]()
 
@@ -22,6 +22,14 @@ struct FindMyDevice: Codable, Hashable {
 
     var decryptedReports: [FindMyLocationReport]?
 
+    internal init(deviceId: String, keys: [FindMyKey] = [FindMyKey](), catalinaBigSurKeyFiles: [Data]? = nil, reports: [FindMyReport]? = nil, decryptedReports: [FindMyLocationReport]? = nil) {
+        self.deviceId = deviceId
+        self.keys = keys
+        self.catalinaBigSurKeyFiles = catalinaBigSurKeyFiles
+        self.reports = reports
+        self.decryptedReports = decryptedReports
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(deviceId)
     }

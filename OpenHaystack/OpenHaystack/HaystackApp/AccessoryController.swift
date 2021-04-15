@@ -93,6 +93,7 @@ class AccessoryController: ObservableObject {
         return accessory
     }
 
+    #if os(macOS)
     /// Export the accessories property list so it can be imported at another location.
     func export(accessories: [Accessory]) throws -> URL {
         let propertyList = try PropertyListEncoder().encode(accessories)
@@ -192,6 +193,52 @@ class AccessoryController: ObservableObject {
             }
         }
     }
+    #endif
+    
+    #if os(iOS)
+    /// Download the location reports from.
+    ///
+    /// - Parameter completion: called when the reports have been succesfully downloaded or the request has failed
+    func downloadLocationReports(completion: @escaping (Result<Void,Error>) -> Void) {
+    
+        self.findMyController.fetchReports(for: self.accessories, with: Data()) { result in
+            switch result {
+            case .failure(let error):
+                os_log(.error, "Downloading reports failed %@", error.localizedDescription)
+                completion(.failure(error))
+            case .success(let devices):
+                let reports = devices.compactMap({ $0.reports }).flatMap({ $0 })
+                if reports.isEmpty {
+                    //TODO: Add error alert for report
+                    completion(.success(()))
+                } else {
+                    self.updateWithDecryptedReports(devices: devices)
+                    completion(.success(()))
+                }
+            }
+        }
+    }
+    
+    func importAccessories(from plistFile: Data) {
+        do {
+            var importedAccessories = try PropertyListDecoder().decode([Accessory].self, from: plistFile)
+
+            var updatedAccessories = self.accessories
+            // Filter out accessories with the same id (no duplicates)
+            importedAccessories = importedAccessories.filter({ acc in !self.accessories.contains(where: { acc.id == $0.id }) })
+            updatedAccessories.append(contentsOf: importedAccessories)
+            updatedAccessories.sort(by: { $0.name < $1.name })
+
+            self.accessories = updatedAccessories
+
+            //Update reports automatically. Do not report errors from here
+            self.downloadLocationReports { result in }
+        }catch {
+            os_log(.error, "Import failed %@", String(describing: error))
+        }
+    }
+    
+    #endif
 
 }
 

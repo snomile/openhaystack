@@ -12,8 +12,12 @@ import MapKit
 import SwiftUI
 
 class AccessoryAnnotationView: MKAnnotationView {
-
+    
+    #if os(macOS)
     var pinView: NSHostingView<AccessoryPinView>?
+    #elseif os(iOS)
+    var pinView: UIHostingController<AccessoryPinView>?
+    #endif
 
     var myAnnotation: MKAnnotation? {
         didSet {
@@ -44,6 +48,7 @@ class AccessoryAnnotationView: MKAnnotationView {
 
     func updateView() {
         guard let accessory = (self.annotation as? AccessoryAnnotation)?.accessory else { return }
+        #if os(macOS)
         self.pinView?.removeFromSuperview()
         self.pinView = NSHostingView(rootView: AccessoryPinView(accessory: accessory))
 
@@ -51,45 +56,59 @@ class AccessoryAnnotationView: MKAnnotationView {
 
         self.leftCalloutOffset = CGPoint(x: -13, y: -15)
         self.rightCalloutOffset = CGPoint(x: -13, y: -15)
-
         let calloutView = NSTextView()
         calloutView.string = accessory.name
-        calloutView.frame = NSRect(x: 0, y: 0, width: 150, height: 30)
+        calloutView.backgroundColor = NSColor.clear
+        #elseif os(iOS)
+        self.pinView?.view.removeFromSuperview()
+        self.pinView = UIHostingController(rootView: AccessoryPinView(accessory: accessory))
 
+        self.addSubview(pinView!.view!)
+
+
+        let calloutView = UILabel()
+        calloutView.text = accessory.name
+        calloutView.backgroundColor = UIColor.clear
+        #endif
+
+        calloutView.frame = CGRect(x: 0, y: 0, width: 150, height: 30)
         if let date = accessory.locationTimestamp {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
 
             let dateString = dateFormatter.string(from: date)
-
+            
+            #if os(macOS)
             calloutView.string = "\(accessory.name)\n\(dateString)"
-            calloutView.frame = NSRect(x: 0, y: 0, width: 150, height: 40)
+            #elseif os(iOS)
+            calloutView.text = "\(accessory.name)\n\(dateString)"
+            #endif
+            calloutView.frame = CGRect(x: 0, y: 0, width: 150, height: 40)
         }
 
         calloutView.sizeToFit()
-        calloutView.backgroundColor = NSColor.clear
         self.detailCalloutAccessoryView = calloutView
         self.canShowCallout = true
     }
 
-    struct AccessoryPinView: View {
-        var accessory: Accessory
+}
 
-        var body: some View {
-            Circle()
-                .strokeBorder(accessory.color, lineWidth: 2.0)
-                .background(
-                    ZStack {
-                        Circle().fill(Color("PinColor"))
-                        Image(systemName: accessory.icon)
-                            .padding(3)
-                    }
-                )
-                .frame(width: 30, height: 30)
-        }
+struct AccessoryPinView: View {
+    var accessory: Accessory
+
+    var body: some View {
+        Circle()
+            .strokeBorder(accessory.color, lineWidth: 2.0)
+            .background(
+                ZStack {
+                    Circle().fill(Color("PinColor"))
+                    Image(systemName: accessory.icon)
+                        .padding(3)
+                }
+            )
+            .frame(width: 30, height: 30)
     }
-
 }
 
 class AccessoryAnnotation: NSObject, MKAnnotation {
