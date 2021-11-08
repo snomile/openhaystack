@@ -9,8 +9,8 @@
 
 import Foundation
 import SwiftUI
-import os
 import UniformTypeIdentifiers
+import os
 
 struct AccessoryListEntryiOS: View {
     var accessory: Accessory
@@ -112,7 +112,7 @@ struct AccessoryListEntryiOS: View {
                 let string = keyByteArray.map { "\\x\(String($0, radix: 16))" }.joined()
                 let pasteboard = UIPasteboard.general
                 pasteboard.setValue(string, forPasteboardType: UTType.plainText.identifier)
-                
+
             } else {
                 let string = keyByteArray.map { "0x\(String($0, radix: 16))" }.joined(separator: ", ")
                 let pasteboard = UIPasteboard.general

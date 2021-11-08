@@ -20,7 +20,7 @@ struct ServerReportsFetcher {
 
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 20) {
             guard !finished else { return }
-            promise.succeed(Response(status: .notFound, body: Response.Body(staticString: "Search party token not available")))
+            promise.succeed(Response(status: .notFound, body: Response.Body(staticString: "Did not fetch anisette data in time")))
         }
 
         //Get the anisette data and token

@@ -69,14 +69,7 @@ struct AccessoryListEntry: View {
             Button("Delete", action: { self.delete(accessory) })
             Divider()
             Button("Rename", action: { self.editingName = true })
-            Divider()
-            Button("Copy key ID (Base64)", action: { self.copyPublicKeyHash(of: accessory) })
-            Menu("Copy advertisement key") {
-                Button("Base64", action: { self.copyAdvertisementKeyB64(of: accessory) })
-                Button("Byte array", action: { self.copyAdvertisementKey(escapedString: false) })
-                Button("Escaped string", action: { self.copyAdvertisementKey(escapedString: true) })
-            }
-            Divider()
+
             Button("Mark as \(accessory.isDeployed ? "deployable" : "deployed")", action: { accessory.isDeployed.toggle() })
         }
     }
