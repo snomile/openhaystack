@@ -31,7 +31,7 @@
 		7821DAD325F7C39A0054DC33 /* ESP32InstallSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7821DAD225F7C39A0054DC33 /* ESP32InstallSheet.swift */; };
 		7822D3642739337F0031B006 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7822D3632739337F0031B006 /* AppDelegate.swift */; };
 		7822D3662739337F0031B006 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7822D3652739337F0031B006 /* ViewController.swift */; };
-		7822D368273933800031B006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7822D367273933800031B006 /* Assets.xcassets */; };
+		7822D368273933800031B006 /* ServerAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7822D367273933800031B006 /* ServerAssets.xcassets */; };
 		7822D370273933940031B006 /* ServerReportsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782578842628388F00B8B953 /* ServerReportsFetcher.swift */; };
 		7822D371273933940031B006 /* GetReportsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782578822628380200B8B953 /* GetReportsBody.swift */; };
 		7822D37527393BAE0031B006 /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 7822D37427393BAE0031B006 /* Vapor */; };
@@ -188,7 +188,7 @@
 		7822D3612739337F0031B006 /* OHServerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OHServerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7822D3632739337F0031B006 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7822D3652739337F0031B006 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7822D367273933800031B006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7822D367273933800031B006 /* ServerAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ServerAssets.xcassets; sourceTree = "<group>"; };
 		7822D36C273933800031B006 /* OHServerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OHServerApp.entitlements; sourceTree = "<group>"; };
 		7822D37327393B630031B006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		782578782628365600B8B953 /* OpenHaystackServer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenHaystackServer; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -429,7 +429,7 @@
 				782578822628380200B8B953 /* GetReportsBody.swift */,
 				782578842628388F00B8B953 /* ServerReportsFetcher.swift */,
 				7822D3652739337F0031B006 /* ViewController.swift */,
-				7822D367273933800031B006 /* Assets.xcassets */,
+				7822D367273933800031B006 /* ServerAssets.xcassets */,
 				7822D36C273933800031B006 /* OHServerApp.entitlements */,
 			);
 			path = OHServerApp;
@@ -796,7 +796,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7822D368273933800031B006 /* Assets.xcassets in Resources */,
+				7822D368273933800031B006 /* ServerAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1215,6 +1215,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OHServerApp/OHServerApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1246,6 +1247,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OHServerApp/OHServerApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
