@@ -1224,7 +1224,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OHServerApp/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 SEEMOO - TU Darmstadt. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = OHServerApp.OHServerApp;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1256,7 +1255,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OHServerApp/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 SEEMOO - TU Darmstadt. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = OHServerApp.OHServerApp;
 				LD_RUNPATH_SEARCH_PATHS = (

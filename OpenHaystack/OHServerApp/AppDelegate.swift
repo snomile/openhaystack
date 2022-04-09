@@ -32,6 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         do {
 
             let app = try Application(.detect())
+            app.http.server.configuration.hostname = "0.0.0.0"
+            app.http.server.configuration.port = 8544
             defer { app.shutdown() }
 
             //Routes

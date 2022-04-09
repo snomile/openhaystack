@@ -41,8 +41,9 @@ struct ServerReportsFetcher {
                     return
                 }
 
-                // 7 days
-                let duration: Double = (24 * 60 * 60) * 7
+                //let duration: Double = (24 * 60 * 60) * 7  // original 7 days
+                let duration: Double = 30 * 60  // fetch report within 30 minutes
+                                
                 let startDate = Date() - duration
                 reportsFetcher.query(
                     forHashes: ids,
