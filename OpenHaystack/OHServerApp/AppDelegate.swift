@@ -43,6 +43,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return ServerReportsFetcher.fetchReports(for: reportIds.ids, with: req)
             }
             
+            app.get("health") { req -> String in
+                return "OK"
+            }
+            
             try app.run()
         } catch {
             fatalError("Vapor failed to start \(String(describing: error))")
